@@ -1,0 +1,149 @@
+header {
+  text-align: center;
+  padding: 32px 16px 0;
+  font-family: sans-serif;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 24px;
+  letter-spacing: 2px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 320px;
+  margin: 24px auto;
+  padding: 16px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-family: sans-serif;
+}
+ 
+.info-row h4 {
+  margin: 0;
+}
+ 
+.like-btn {
+  cursor: pointer;
+  border: none;
+  background: #ff5a5f;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 999px;
+}
+ 
+#gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  padding: 16px;
+}
+ 
+.card {
+  width: 200px;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+ 
+.card h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
+}
+ 
+.card p {
+  margin: 4px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+#hero {
+  position: relative;
+  width: 300px;
+  margin: 24px auto;
+}
+
+#strip-wrapper {
+  width: 300px;
+  overflow: hidden;
+}
+
+#strip {
+  display: flex;
+  transition: transform 0.4s ease;
+}
+
+#strip img {
+  width: 300px;
+  height: 200px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+#prev, #next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.4);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+#prev { left: 0; }
+#next { right: 0; }
+
+#filters {
+  display: flex;
+  justify-content: center;  /* 加這行，按鈕整排置中 */
+  gap: 8px;
+  padding: 16px;
+}
+
+.filter-btn {
+  cursor: pointer;
+  border: 1px solid #ddd;
+  background: #fff;  
+  padding: 6px 16px;
+  border-radius: 999px;
+}
+.filter-btn.active {
+  background: #333;
+  color: #fff; 
+  border-color: #333;
+}
+
+#back-btn {
+  position: fixed;
+  bottom: 50px;
+  right: 30px;
+  padding: 10px 20px;
+  cursor: pointer;
+
+  /* --- 關鍵改動：初始隱藏狀態 --- */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease; /* 讓按鈕出現時有 0.3 秒的漸變感 */
+}
+
+/* --- 當按鈕擁有 .show 這個 class 時的樣子 --- */
+#back-btn.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+footer {
+  text-align: center;
+  padding: 32px;
+  color: #888;
+  font-size: 14px;
+  border-top: 1px solid #eee;
+  margin-top: 32px;
+}
