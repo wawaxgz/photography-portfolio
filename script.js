@@ -1,27 +1,27 @@
 const works = [
   {
-    name: '京都的晨光',
-    price: 800,
-    category: '日本',
-    camera: 'Leica M6',
-    film: 'Kodak Portra 400',
-    image: 'https://picsum.photos/seed/kyoto/300/200'
+    name: '濟州島街道',
+    price: 20,
+    category: '韓國',
+    camera: 'C34EFJ',
+    film: 'Fujifilm C200',
+    image: 'https://github.com/wawaxgz/photography-portfolio/blob/main/assets/img/street2.jpeg?raw=true'
   },
   {
-    name: '九份的雨夜',
-    price: 1200,
-    category: '台灣',
-    camera: 'Contax T2',
-    film: 'Fujifilm Pro 400H',
-    image: 'https://picsum.photos/seed/jiufen/300/200'
+    name: '城山日出峰',
+    price: 50,
+    category: '韓國',
+    camera: 'C35EFJ',
+    film: 'Fujifilm C200',
+    image: 'https://github.com/wawaxgz/photography-portfolio/blob/main/assets/img/songsanpeak.jpeg?raw=true'
   },
   {
-    name: '富士山倒影',
-    price: 1500,
-    category: '日本',
-    camera: 'Nikon FM2',
-    film: 'Cinestill 800T',
-    image: 'https://picsum.photos/seed/fuji/300/200'
+    name: '濟州島街頭',
+    price: 20,
+    category: '韓國',
+    camera: 'C35EFJ',
+    film: 'Fujifilm C200',
+    image: 'https://github.com/wawaxgz/photography-portfolio/blob/main/assets/img/street1.jpeg?raw=true'
   }
 ];
  
@@ -47,6 +47,7 @@ function renderWorks(list) {
   list.forEach(function (work) {
     html = html + `
       <div class="card">
+        <img src="${work.image}" alt="${work.name}">
         <h3>${work.name}</h3>
         <p>價格：$${work.price}</p>
         <p>分類：${work.category}</p>

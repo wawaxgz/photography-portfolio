@@ -4,24 +4,40 @@
   <head>
     <meta charset="UTF-8">
     <title>練習頁面-1</title>
-    <link rel="stylesheet" href="./style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=EB+Garamond&display=swap" rel="stylesheet">
+<meta name="description" content="Angel 的底片攝影作品集，記錄濟州島旅行風景，使用 Konica C35EFJ 拍攝。">
+<meta name="keywords" content="底片攝影,濟州島,旅行攝影,Fujifilm C200,攝影作品集">
+<meta name="author" content="Angel">
+
+<meta property="og:title" content="Angel's Photography | 底片攝影作品集">
+
+<meta property="og:description" content="記錄濟州島旅行風景的底片攝影作品，使用 Konica C35EFJ 拍攝。">
+
+<meta property="og:image" content="https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/images/jeju-seongsan.jpeg">
+<meta property="og:url" content="https://wawaxgz.github.io/photography-portfolio/">
+<meta property="og:type" content="website"><link rel="stylesheet" href="./style.css">
 
   </head>
     
   <body>
   <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Angel's Photography | 底片攝影作品集</title>
 </head>
-<body>
-<header>
+<body> 
+  <header>
   <h1>Angel's Photography</h1>
+  <nav>
+    <a href="#gallery">作品</a>
+    <a href="#about">關於</a>
+    <a href="#footer">聯絡</a>
+  </nav>
 </header>
+
 <section id="hero">
   <div id="strip-wrapper">
     <div id="strip"></div>
@@ -29,23 +45,31 @@
   <button id="prev">＜</button>
   <button id="next">＞</button>
 </section>
- 
+
 <div class="info-row">
   <h4>我的作品</h4>
   <button class="like-btn">❤️ 讚 <span id="like-count">0</span></button>
 </div>
- 
+
+<div id="about">
+  <p>我是 Angel，一名底片攝影愛好者。我喜歡透過底片記錄旅行風景與生活日常，享受每一次等待顯影結果的驚喜。</p>
+  <p>隨著接觸底片的時間越來越長，我也開始投入底片沖洗與掃描，希望不只是創造影像，更能幫助每一張底片完整呈現它原本的樣貌。</p>
+  <p>這裡展示的是我的攝影作品，也記錄著我在底片影像保存與沖洗路上的探索。</p>
+</div>
 <div id="filters"></div>
 <div id="gallery"></div>
-<div>
-  <button id="back-btn">回到頂端</button>
-</div>
-<footer>
-  <p>聯絡我：@email.com</p>
-</footer>
- 
-</body>
 
+<button id="back-btn">回頁首</button>
+
+<footer id="footer">
+  <p>Angel's Photography</p>
+  <div class="footer-links">
+    <a href="mailto:wawaxgz@gmail.com">你的email</a>
+    <a href="" target="_blank">Instagram</a>
+  </div>
+  <p class="footer-copy">© 2026 Angel. All rights reserved.</p>
+</footer>
+</body>
 </html>
     <script  src="./script.js"></script>
 
