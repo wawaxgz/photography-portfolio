@@ -5,7 +5,7 @@ const works = [
     category: '韓國',
     camera: 'C34EFJ',
     film: 'Fujifilm C200',
-    image: 'https://github.com/wawaxgz/photography-portfolio/blob/main/assets/img/street2.jpeg?raw=true'
+    image: 'https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/street2.jpeg'
   },
   {
     name: '城山日出峰',
@@ -13,7 +13,7 @@ const works = [
     category: '韓國',
     camera: 'C35EFJ',
     film: 'Fujifilm C200',
-    image: 'https://github.com/wawaxgz/photography-portfolio/blob/main/assets/img/songsanpeak.jpeg?raw=true'
+    image: 'https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/songsanpeak.jpeg'
   },
   {
     name: '濟州島街頭',
@@ -21,7 +21,7 @@ const works = [
     category: '韓國',
     camera: 'C35EFJ',
     film: 'Fujifilm C200',
-    image: 'https://github.com/wawaxgz/photography-portfolio/blob/main/assets/img/street1.jpeg?raw=true'
+    image: 'https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/street1.jpeg'
   }
 ];
  
