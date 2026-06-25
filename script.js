@@ -1,11 +1,13 @@
-const works = [
+const savedWorks = localStorage.getItem('works');
+const works = savedWorks ? JSON.parse(savedWorks) : [
   {
     name: '濟州島街道',
     price: 20,
     category: '韓國',
     camera: 'C34EFJ',
     film: 'Fujifilm C200',
-    image: 'https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/street2.jpeg'
+    image: 'https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/street2.jpeg',
+    isFavorite: false, 
   },
   {
     name: '城山日出峰',
@@ -13,7 +15,8 @@ const works = [
     category: '韓國',
     camera: 'C35EFJ',
     film: 'Fujifilm C200',
-    image: 'https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/songsanpeak.jpeg'
+    image: 'https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/songsanpeak.jpeg',
+    isFavorite: false,
   },
   {
     name: '濟州島街頭',
@@ -21,8 +24,9 @@ const works = [
     category: '韓國',
     camera: 'C35EFJ',
     film: 'Fujifilm C200',
-    image: 'https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/street1.jpeg'
-  }
+    image: 'https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/street1.jpeg',
+    isFavorite: false, 
+  },
 ];
  
 /* ---------- Day 1：按讚功能 ---------- */
@@ -44,10 +48,11 @@ function renderWorks(list) {
 
   let html = '';
 
-  list.forEach(function (work) {
+  list.forEach(function (work, index) {
     html = html + `
       <div class="card">
         <img src="${work.image}" alt="${work.name}">
+        <button class="heart-btn ${work.isFavorite ? 'active' : ''}" data-index="${index}">♥</button>
         <h3>${work.name}</h3>
         <p>價格：$${work.price}</p>
         <p>分類：${work.category}</p>
@@ -158,3 +163,219 @@ topBtn.addEventListener('click', () => {
         behavior: 'smooth' // 加入平滑捲動效果
     });
 });
+
+document.querySelector('#gallery').addEventListener('click', function (event) {
+  if (event.target.classList.contains('heart-btn')) {
+    const index = Number(event.target.dataset.index);
+    works[index].isFavorite = !works[index].isFavorite;
+    event.target.classList.toggle('active', works[index].isFavorite);
+    localStorage.setItem('works', JSON.stringify(works)); 
+  }
+});
+
+/* ---------- Day 2：聯絡表單驗證 ---------- */
+
+const nameInput    = document.querySelector('#name-input');
+const phoneInput   = document.querySelector('#phone-input');
+const emailInput   = document.querySelector('#email-input');
+const messageInput = document.querySelector('#message-input');
+const charCount    = document.querySelector('#char-count');
+const submitBtn    = document.querySelector('#submit-btn');
+const countryCode  = document.querySelector('#country-code');
+const intlReminder = document.querySelector('#intl-reminder');
+
+/* --- 選台灣/其他，控制紅字提醒 --- */
+countryCode.addEventListener('change', function () {
+  intlReminder.style.display = this.value === 'other' ? 'block' : 'none';
+});
+
+/* --- 驗證規則 --- */
+function validateName(value) {
+  if (value.trim() === '') return '姓名不能空白';
+  if (!/^[\u4e00-\u9fa5a-zA-Z\s]+$/.test(value)) return '姓名不能包含數字或特殊符號';
+  return '';
+}
+
+function validatePhone(value) {
+  if (value.trim() === '') return '電話不能空白';
+  if (!/^\d+$/.test(value)) return '電話只能輸入數字';
+  if (value.length < 6 || value.length > 15) return '電話長度應介於 6 至 15 碼';
+  return '';
+}
+
+function validateEmail(value) {
+  if (value.trim() === '') return 'Email 不能空白';
+  if (!value.includes('@')) return 'Email 格式不正確，請確認是否包含 @';
+  return '';
+}
+
+/* --- 顯示／清除錯誤 --- */
+function showError(input, message) {
+  input.classList.add('input-error');
+  const next = input.nextElementSibling;
+  if (next && next.classList.contains('error-msg')) return;
+  const err = document.createElement('p');
+  err.className = 'error-msg';
+  err.textContent = message;
+  input.insertAdjacentElement('afterend', err);
+}
+
+function clearError(input) {
+  input.classList.remove('input-error');
+  const next = input.nextElementSibling;
+  if (next && next.classList.contains('error-msg')) next.remove();
+}
+
+/* --- blur：游標離開時驗證 --- */
+nameInput.addEventListener('blur', function () {
+  const msg = validateName(this.value);
+  msg ? showError(this, msg) : clearError(this);
+});
+
+phoneInput.addEventListener('blur', function () {
+  const msg = validatePhone(this.value);
+  const phoneRow = this.closest('.phone-row');
+  if (msg) {
+    phoneRow.classList.add('input-error');
+    const next = phoneRow.nextElementSibling;
+    if (!next || !next.classList.contains('error-msg')) {
+      const err = document.createElement('p');
+      err.className = 'error-msg';
+      err.textContent = msg;
+      phoneRow.insertAdjacentElement('afterend', err);
+    }
+  } else {
+    phoneRow.classList.remove('input-error');
+    const next = phoneRow.nextElementSibling;
+    if (next && next.classList.contains('error-msg')) next.remove();
+  }
+});
+
+emailInput.addEventListener('blur', function () {
+  const msg = validateEmail(this.value);
+  msg ? showError(this, msg) : clearError(this);
+});
+
+/* --- 字數計算 --- */
+messageInput.addEventListener('input', function () {
+  charCount.textContent = this.value.length + ' / 50';
+});
+
+/* --- 提交 --- */
+submitBtn.addEventListener('click', function () {
+  const nameMsg  = validateName(nameInput.value);
+  const phoneMsg = validatePhone(phoneInput.value);
+  const emailMsg = validateEmail(emailInput.value);
+
+  nameMsg  ? showError(nameInput, nameMsg)   : clearError(nameInput);
+  phoneMsg ? showError(phoneInput, phoneMsg) : clearError(phoneInput);
+  emailMsg ? showError(emailInput, emailMsg) : clearError(emailInput);
+
+  if (!nameMsg && !phoneMsg && !emailMsg) {
+    alert('感謝您的訊息，我會盡快與您聯絡！');
+  }
+});
+
+/* ---------- Day 3：留言板 ---------- */
+
+const commentText     = document.querySelector('#comment-text');
+const commentCount    = document.querySelector('#comment-char-count');
+const commentSubmit   = document.querySelector('#comment-submit');
+const commentList     = document.querySelector('#comment-list');
+
+// 讀留言資料，有就用，沒有就用空陣列
+let comments = JSON.parse(localStorage.getItem('comments')) || [];
+
+// nextId 從現有留言的最大 id + 1 開始，避免 id 重複
+let nextId = comments.length > 0
+  ? Math.max(...comments.map(c => c.id)) + 1
+  : 0;
+
+let currentSort = 'newest';  // 預設新到舊
+/* --- 字數計算 --- */
+commentText.addEventListener('input', function () {
+  commentCount.textContent = this.value.length + ' / 30';
+});
+
+/* --- 渲染留言列表 --- */
+function renderComments() {
+  commentList.innerHTML = '';
+
+  // 根據排序決定顯示順序
+  const sorted = currentSort === 'newest'
+    ? [...comments].reverse()   // 新到舊：反轉陣列
+    : [...comments];            // 舊到新：原本的順序
+
+  sorted.forEach(function (comment) {
+    const card = document.createElement('div');
+    card.className = 'comment-card';
+    card.dataset.id = comment.id;
+
+    card.innerHTML = `
+      <button class="comment-delete">✕</button>
+      <span class="comment-content">${comment.text}</span>
+      <span class="comment-time">${comment.time}</span>
+    `;
+
+    commentList.appendChild(card);
+  });
+}
+
+/* --- 送出留言 --- */
+commentSubmit.addEventListener('click', function () {
+  const text = commentText.value.trim();
+  if (text === '') return;  // 空白不送出
+
+  // 建立一筆新資料，存進陣列
+  const now = new Date();
+  const timeStr = now.getFullYear() + '/'
+    + String(now.getMonth() + 1).padStart(2, '0') + '/'
+    + String(now.getDate()).padStart(2, '0') + ' '
+    + String(now.getHours()).padStart(2, '0') + ':'
+    + String(now.getMinutes()).padStart(2, '0');
+
+  comments.push({
+    id: nextId++,
+    text: text,
+    time: timeStr
+  });
+
+  // 清空輸入框
+  commentText.value = '';
+  commentCount.textContent = '0 / 30';
+
+  // 重新渲染
+  renderComments();
+  localStorage.setItem('comments', JSON.stringify(comments)); 
+});
+
+/* --- 刪除留言（事件委派） --- */
+commentList.addEventListener('click', function (event) {
+  if (event.target.classList.contains('comment-delete')) {
+    const card = event.target.closest('.comment-card');
+    const id = Number(card.dataset.id);
+
+    // 從陣列裡移除這筆
+    comments = comments.filter(function (c) {
+      return c.id !== id;
+    });
+
+    // 重新渲染
+    renderComments();
+    localStorage.setItem('comments', JSON.stringify(comments));
+  }
+});
+
+/* --- 排序按鈕 --- */
+document.querySelectorAll('.sort-btn').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    document.querySelectorAll('.sort-btn').forEach(function (b) {
+      b.classList.remove('active');
+    });
+    this.classList.add('active');
+    currentSort = this.dataset.sort;
+    renderComments();
+  });
+});
+
+renderComments();
