@@ -1,31 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-
-  <head>
-    <meta charset="UTF-8">
-    <title>Angel&#39;s Photography | 底片攝影作品集</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=EB+Garamond&display=swap" rel="stylesheet">
-<meta name="description" content="Angel 的底片攝影作品集，記錄濟州島旅行風景，使用 Konica C35EFJ 拍攝。">
-<meta name="keywords" content="底片攝影,濟州島,旅行攝影,Fujifilm C200,攝影作品集">
-<meta name="author" content="Angel">
-
-<meta property="og:title" content="Angel's Photography | 底片攝影作品集">
-
-<meta property="og:description" content="記錄濟州島旅行風景的底片攝影作品，使用 Konica C35EFJ 拍攝。">
-
-<meta property="og:image" content="https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/songsanpeak.jpeg">
-<meta property="og:url" content="https://wawaxgz.github.io/photography-portfolio/">
-<meta property="og:type" content="website"><link rel="stylesheet" href="./style.css">
-
-  </head>
-    
-  <body>
-  <header>
+<header>
   <h1>Angel's Photography</h1>
   <nav>
     <a href="#gallery">作品</a>
     <a href="#about">關於</a>
-    <a href="#footer">聯絡</a>
+    <a href="#comments">留言</a>
+    <a href="#contact">聯絡</a>
   </nav>
 </header>
 
@@ -50,6 +29,81 @@
 <div id="filters"></div>
 <div id="gallery"></div>
 
+<section id="comments">
+  <h2>留言板</h2>
+
+  <!-- 輸入區 -->
+  <div id="comment-input-area">
+    <textarea id="comment-text" placeholder="留下你的留言..." maxlength="30"></textarea>
+    <div class="comment-input-row">
+      <span id="comment-char-count">0 / 30</span>
+      <button id="comment-submit">送出</button>
+    </div>
+  </div>
+
+  <!-- 排序列 -->
+  <div id="comment-sort">
+    <button class="sort-btn active" data-sort="newest">新到舊</button>
+    <button class="sort-btn" data-sort="oldest">舊到新</button>
+  </div>
+
+  <!-- 留言列表 -->
+  <div id="comment-list"></div>
+</section>
+
+<section id="contact">
+  <h2>聯絡我</h2>
+  <form id="contact-form">
+
+    <div class="form-group">
+      <label>姓名</label>
+      <input type="text" id="name-input" placeholder="請輸入姓名">
+    </div>
+
+    <div class="form-group">
+      <label>電話</label>
+      <div class="phone-row">
+        <select id="country-code">
+          <option value="+886">+886（台灣）</option>
+          <option value="other">其他</option>
+        </select>
+        <input type="tel" id="phone-input" placeholder="請輸入電話號碼">
+      </div>
+      <p id="intl-reminder" style="display:none; color:#c0392b; font-size:12px;">
+        請記得在號碼前加上國際區碼，例如 +81（日本）
+      </p>
+    </div>
+
+    <div class="form-group">
+      <label>通訊軟體（選填）</label>
+      <div class="phone-row">
+        <select id="messenger-type">
+          <option value="">請選擇</option>
+          <option value="LINE">LINE</option>
+          <option value="WeChat">WeChat</option>
+          <option value="WhatsApp">WhatsApp</option>
+          <option value="Telegram">Telegram</option>
+          <option value="Instagram">Instagram DM</option>
+        </select>
+        <input type="text" id="messenger-id" placeholder="請輸入帳號 / ID">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Email</label>
+      <input type="text" id="email-input" placeholder="請輸入 Email">
+    </div>
+
+    <div class="form-group">
+      <label>訊息 <span id="char-count">0 / 50</span></label>
+      <textarea id="message-input" placeholder="請輸入訊息" maxlength="50"></textarea>
+    </div>
+
+    <button type="button" id="submit-btn">送出</button>
+
+  </form>
+</section>
+
 <button id="back-btn">回頁首</button>
 
 <footer id="footer">
@@ -60,8 +114,3 @@
   </div>
   <p class="footer-copy">© 2026 Angel. All rights reserved.</p>
 </footer>
-    <script  src="./script.js"></script>
-
-  </body>
-  
-</html>
