@@ -177,6 +177,7 @@ nav a:hover {
   padding: 0;
   border: none;
   background: transparent;
+  position: relative;
 }
 
 .card img {
@@ -201,6 +202,24 @@ nav a:hover {
   color: #8b6f47;
   font-family: 'EB Garamond', serif;
 }
+
+.heart-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: #999;
+  padding: 4px;
+  line-height: 1;
+}
+
+/* 收藏後變紅 */
+.heart-btn.active {
+  color: red;
+}
  
 #back-btn {
   position: fixed;
@@ -217,6 +236,241 @@ nav a:hover {
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+#comments {
+  max-width: 480px;
+  margin: 48px auto;
+  padding: 0 16px;
+}
+
+#comments h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: #3a2e1e;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+#comment-input-area {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+#comment-text {
+  font-family: 'EB Garamond', serif;
+  font-size: 15px;
+  color: #3a2e1e;
+  background: transparent;
+  border: 1px solid #c4a882;
+  padding: 10px 12px;
+  resize: none;
+  height: 80px;
+  outline: none;
+}
+
+#comment-text:focus {
+  border-color: #8b6f47;
+}
+
+.comment-input-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#comment-char-count {
+  font-size: 12px;
+  color: #c4a882;
+  font-family: 'EB Garamond', serif;
+}
+
+#comment-submit {
+  cursor: pointer;
+  border: 1px solid #8b6f47;
+  background: transparent;
+  color: #8b6f47;
+  padding: 8px 20px;
+  font-family: 'EB Garamond', serif;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+#comment-submit:hover {
+  background: #8b6f47;
+  color: #f5f0e8;
+}
+
+#comment-sort {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.sort-btn {
+  cursor: pointer;
+  border: 1px solid #c4a882;
+  background: transparent;
+  color: #8b6f47;
+  padding: 4px 14px;
+  font-family: 'EB Garamond', serif;
+  font-size: 13px;
+}
+
+.sort-btn.active {
+  background: #8b6f47;
+  color: #f5f0e8;
+  border-color: #8b6f47;
+}
+
+.comment-card {
+  position: relative;
+  border: 1px solid #c4a882;
+  padding: 12px 12px 12px 36px;
+  margin-bottom: 8px;
+  font-family: 'EB Garamond', serif;
+  font-size: 15px;
+  color: #3a2e1e;
+}
+
+.comment-delete {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: #c4a882;
+  line-height: 1;
+  padding: 0;
+}
+
+.comment-delete:hover {
+  color: #c0392b;
+}
+
+.comment-time {
+  display: block;
+  font-size: 11px;
+  color: #c4a882;
+  margin-top: 6px;
+}
+
+#contact {
+  max-width: 480px;
+  margin: 48px auto;
+  padding: 0 16px;
+}
+
+#contact h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: #3a2e1e;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+#contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-family: 'EB Garamond', serif;
+  font-size: 14px;
+  color: #8b6f47;
+  display: flex;
+  justify-content: space-between;
+}
+
+#char-count {
+  font-size: 12px;
+  color: #c4a882;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  font-family: 'EB Garamond', serif;
+  font-size: 15px;
+  color: #3a2e1e;
+  background: transparent;
+  border: 1px solid #c4a882;
+  padding: 10px 12px;
+  outline: none;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #8b6f47;
+}
+
+.form-group textarea {
+  resize: none;
+  height: 100px;
+}
+
+.phone-row {
+  display: flex;
+  gap: 8px;
+}
+
+#country-code {
+  width: 140px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+#messenger-type {
+  width: 140px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+#phone-input {
+  flex: 1;
+}
+
+#messenger-id {
+  flex: 1;
+}
+
+.input-error {
+  border-color: #c0392b;
+}
+
+.error-msg {
+  font-size: 12px;
+  color: #c0392b;
+  font-family: 'EB Garamond', serif;
+}
+
+#submit-btn {
+  align-self: flex-end;
+  cursor: pointer;
+  border: 1px solid #8b6f47;
+  background: transparent;
+  color: #8b6f47;
+  padding: 10px 28px;
+  font-family: 'EB Garamond', serif;
+  font-size: 15px;
+  letter-spacing: 1px;
+}
+
+#submit-btn:hover {
+  background: #8b6f47;
+  color: #f5f0e8;
 }
  
 #back-btn.show {
