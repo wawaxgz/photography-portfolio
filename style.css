@@ -303,16 +303,6 @@ footer p {
     height: 250px;
   }
 
-    .like-btn {
-    padding: 14px 22px;       
-    font-size: 16px;        
-    min-height: 44px;     
-  }
-
-  .like-btn span {
-  display: inline-block;
-  }
-
   /* 作品標題列：縮小寬度 */
   .info-row {
     width: calc(100% - 32px);
