@@ -142,6 +142,23 @@ nav a:hover {
   border-color: #8b6f47;
 }
 
+#sort-bar {
+  display: flex;
+  justify-content: center;
+  padding: 8px 16px;
+}
+
+#price-sort {
+  font-family: 'EB Garamond', serif;
+  font-size: 14px;
+  color: #8b6f47;
+  background: transparent;
+  border: 1px solid #c4a882;
+  padding: 6px 12px;
+  cursor: pointer;
+  outline: none;
+}
+
 #gallery,
 #about,
 #footer {
