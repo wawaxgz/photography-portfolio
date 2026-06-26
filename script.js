@@ -1,33 +1,33 @@
-const savedWorks = localStorage.getItem('works');
-const works = savedWorks ? JSON.parse(savedWorks) : [
-  {
-    name: '濟州島街道',
-    price: 20,
-    category: '韓國',
-    camera: 'C34EFJ',
-    film: 'Fujifilm C200',
-    image: 'https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/street2.jpeg',
-    isFavorite: false, 
-  },
-  {
-    name: '城山日出峰',
-    price: 50,
-    category: '韓國',
-    camera: 'C35EFJ',
-    film: 'Fujifilm C200',
-    image: 'https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/songsanpeak.jpeg',
-    isFavorite: false,
-  },
-  {
-    name: '濟州島街頭',
-    price: 20,
-    category: '韓國',
-    camera: 'C35EFJ',
-    film: 'Fujifilm C200',
-    image: 'https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/street1.jpeg',
-    isFavorite: false, 
-  },
-];
+const WORKS_URL = 'https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/data/works.json';
+
+let works = [];
+
+async function init() {
+  try {
+    const savedWorks = localStorage.getItem('works');
+
+    if (savedWorks) {
+      works = JSON.parse(savedWorks);
+    } else {
+      const response = await fetch(WORKS_URL);
+      const data = await response.json();
+      works = data.map(function (item) {
+        return Object.assign({}, item, { isFavorite: false });
+      });
+    }
+
+    startApp();
+
+  } catch (error) {
+    console.error('資料載入失敗', error);
+  }
+}
+
+function startApp() {
+  renderWorks(works);
+  buildFilters();
+  buildSlider();
+}
  
 /* ---------- Day 1：按讚功能 ---------- */
 const button = document.querySelector('.like-btn');
@@ -67,81 +67,80 @@ function renderWorks(list) {
 
 renderWorks(works);
 
+/* ---------- 篩選按鈕 ---------- */
+function buildFilters() {
+  const categories = ['全部', ...new Set(works.map(function (work) {
+    return work.category;
+  }))];
 
-/* ---------- Day 5：篩選按鈕 ---------- */
-const categories = ['全部', ...new Set(works.map(function (work) {
-  return work.category;
-}))];
+  const filtersDiv = document.querySelector('#filters');
+  filtersDiv.innerHTML = '';
 
-const filtersDiv = document.querySelector('#filters');
+  categories.forEach(function (category) {
+    const btn = document.createElement('button');
+    btn.textContent = category;
+    btn.className = 'filter-btn';
 
-categories.forEach(function (category) {
-  const btn = document.createElement('button');
-  btn.textContent = category;
-  btn.className = 'filter-btn';
-
-  btn.addEventListener('click', function () {
-    document.querySelectorAll('.filter-btn').forEach(function (b) {
-      b.classList.remove('active');
-    });
-    btn.classList.add('active');
-
-    if (category === '全部') {
-      renderWorks(works);
-    } else {
-      const filtered = works.filter(function (work) {
-        return work.category === category;
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.filter-btn').forEach(function (b) {
+        b.classList.remove('active');
       });
-      renderWorks(filtered);
-    }
+      btn.classList.add('active');
+
+      if (category === '全部') {
+        renderWorks(works);
+      } else {
+        const filtered = works.filter(function (work) {
+          return work.category === category;
+        });
+        renderWorks(filtered);
+      }
+    });
+
+    filtersDiv.appendChild(btn);
   });
 
-  filtersDiv.appendChild(btn);
-});
-
-document.querySelector('.filter-btn').classList.add('active');
-
-/* ---------- Day 4：輪播 ---------- */
-const strip = document.querySelector('#strip');
-
-// 用 works 陣列把圖片塞進帶子
-works.forEach(function (work) {
-  const img = document.createElement('img');
-  img.src = work.image;
-  img.alt = work.name;
-  strip.appendChild(img);
-});
-
-// 座標變數
-let current = 0;
-
-// 更新位移的函式
-function updateSlide() {
-  strip.style.transform = `translateX(${current * -100}%)`;
+  document.querySelector('.filter-btn').classList.add('active');
 }
 
-// 下一張
-document.querySelector('#next').addEventListener('click', function () {
-  if (current === works.length - 1) {
-    current = 0;
-  } else {
-    current = current + 1;
+/* ---------- 輪播 ---------- */
+function buildSlider() {
+  const strip = document.querySelector('#strip');
+  strip.innerHTML = '';
+
+  works.forEach(function (work) {
+    const img = document.createElement('img');
+    img.src = work.image;
+    img.alt = work.name;
+    strip.appendChild(img);
+  });
+
+  let current = 0;
+
+  function updateSlide() {
+    strip.style.transform = `translateX(${current * -100}%)`;
   }
-  updateSlide();
-});
 
-// 上一張
-document.querySelector('#prev').addEventListener('click', function () {
-  if (current === 0) {
-    current = works.length - 1;
-  } else {
-    current = current - 1;
-  }
-  updateSlide();
-});
+  document.querySelector('#next').addEventListener('click', function () {
+    if (current === works.length - 1) {
+      current = 0;
+    } else {
+      current = current + 1;
+    }
+    updateSlide();
+  });
 
-// 第六天
+  document.querySelector('#prev').addEventListener('click', function () {
+    if (current === 0) {
+      current = works.length - 1;
+    } else {
+      current = current - 1;
+    }
+    updateSlide();
+  });
+}
 
+/* ---------- 回到頂部按鈕 ---------- */
 const topBtn = document.querySelector('#back-btn');
 
 // 1. 監控捲動 (Scroll Event)
@@ -173,7 +172,7 @@ document.querySelector('#gallery').addEventListener('click', function (event) {
   }
 });
 
-/* ---------- Day 2：聯絡表單驗證 ---------- */
+/* ---------- 聯絡表單驗證 ---------- */
 
 const nameInput    = document.querySelector('#name-input');
 const phoneInput   = document.querySelector('#phone-input');
@@ -276,7 +275,7 @@ submitBtn.addEventListener('click', function () {
   }
 });
 
-/* ---------- Day 3：留言板 ---------- */
+/* ---------- 留言板 ---------- */
 
 const commentText     = document.querySelector('#comment-text');
 const commentCount    = document.querySelector('#comment-char-count');
@@ -378,4 +377,4 @@ document.querySelectorAll('.sort-btn').forEach(function (btn) {
   });
 });
 
-renderComments();
+init();
