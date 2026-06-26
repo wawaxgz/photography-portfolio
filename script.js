@@ -64,8 +64,6 @@ function renderWorks(list) {
   gallery.innerHTML = html;
 }
 
-renderWorks(works);
-
 /* ---------- 篩選按鈕 ---------- */
 function buildFilters() {
   const categories = ['全部', ...new Set(works.map(function (work) {
