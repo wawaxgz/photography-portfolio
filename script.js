@@ -64,7 +64,26 @@ function renderWorks(list) {
   gallery.innerHTML = html;
 }
 
-/* ---------- 篩選按鈕 ---------- */
+/* ----------  價格篩選 + 排序 ---------- */
+let currentCategory = '全部';
+let currentPriceSort = 'default';
+
+function applyFiltersAndSort() {
+  let result = currentCategory === '全部'
+    ? [...works]
+    : works.filter(function (work) {
+        return work.category === currentCategory;
+      });
+
+  if (currentPriceSort === 'asc') {
+    result.sort(function (a, b) { return a.price - b.price; });
+  } else if (currentPriceSort === 'desc') {
+    result.sort(function (a, b) { return b.price - a.price; });
+  }
+
+  renderWorks(result);
+}
+
 function buildFilters() {
   const categories = ['全部', ...new Set(works.map(function (work) {
     return work.category;
@@ -83,21 +102,19 @@ function buildFilters() {
         b.classList.remove('active');
       });
       btn.classList.add('active');
-
-      if (category === '全部') {
-        renderWorks(works);
-      } else {
-        const filtered = works.filter(function (work) {
-          return work.category === category;
-        });
-        renderWorks(filtered);
-      }
+      currentCategory = category;
+      applyFiltersAndSort();
     });
 
     filtersDiv.appendChild(btn);
   });
 
   document.querySelector('.filter-btn').classList.add('active');
+
+  document.querySelector('#price-sort').addEventListener('change', function () {
+    currentPriceSort = this.value;
+    applyFiltersAndSort();
+  });
 }
 
 /* ---------- 輪播 ---------- */
