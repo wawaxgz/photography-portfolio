@@ -4,17 +4,16 @@ let works = [];
 
 async function init() {
   try {
-    const savedWorks = localStorage.getItem('works');
+    const response = await fetch(WORKS_URL);
+    const data = await response.json();
 
-    if (savedWorks) {
-      works = JSON.parse(savedWorks);
-    } else {
-      const response = await fetch(WORKS_URL);
-      const data = await response.json();
-      works = data.map(function (item) {
-        return Object.assign({}, item, { isFavorite: false });
+    const savedFavorites = JSON.parse(localStorage.getItem('favorites')) || {};
+
+    works = data.map(function (item) {
+      return Object.assign({}, item, {
+        isFavorite: savedFavorites[item.name] || false
       });
-    }
+    });
 
     startApp();
 
@@ -163,12 +162,17 @@ topBtn.addEventListener('click', () => {
     });
 });
 
+/* ---------- 按圖片愛心 ---------- */
+
 document.querySelector('#gallery').addEventListener('click', function (event) {
   if (event.target.classList.contains('heart-btn')) {
     const index = Number(event.target.dataset.index);
     works[index].isFavorite = !works[index].isFavorite;
     event.target.classList.toggle('active', works[index].isFavorite);
-    localStorage.setItem('works', JSON.stringify(works)); 
+
+    const savedFavorites = JSON.parse(localStorage.getItem('favorites')) || {};
+    savedFavorites[works[index].name] = works[index].isFavorite;
+    localStorage.setItem('favorites', JSON.stringify(savedFavorites));
   }
 });
 
