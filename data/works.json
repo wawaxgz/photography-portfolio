@@ -1,4 +1,12 @@
 [
+    {
+    "name": "濟州島街頭",
+    "price": 20,
+    "category": "韓國",
+    "camera": "C35EFJ",
+    "film": "Fujifilm C200",
+    "image": "https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/street1.jpeg"
+  },
   {
     "name": "濟州島街道",
     "price": 20,
@@ -16,37 +24,21 @@
     "image": "https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/songsanpeak.jpeg"
   },
   {
-    "name": "濟州島街頭",
-    "price": 20,
-    "category": "韓國",
-    "camera": "C35EFJ",
-    "film": "Fujifilm C200",
-    "image": "https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/street1.jpeg"
-  }
-  {
-    "name": "濟州島街頭",
-    "price": 20,
-    "category": "韓國",
-    "camera": "C35EFJ",
-    "film": "Fujifilm C200",
-    "image": "https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/street1.jpeg"
-  }
-  {
     "name": "濟州島海邊",
     "price": 20,
     "category": "韓國",
     "camera": "C35EFJ",
     "film": "Fujifilm C200",
     "image": "https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/sea1.jpeg"
-  }
+  },
   {
-    "name": "濟州島海邊",
+    "name": "濟州島海岸",
     "price": 20,
     "category": "韓國",
     "camera": "C35EFJ",
     "film": "Fujifilm C200",
     "image": "https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/sea2.jpeg"
-  }
+  },
   {
     "name": "香港街頭",
     "price": 20,
@@ -54,31 +46,31 @@
     "camera": "C35EFJ",
     "film": "Fujifilm C200",
     "image": "https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/HK1.jpeg"
-  }
+  },
   {
-    "name": "香港街頭",
+    "name": "香港街角",
     "price": 20,
     "category": "香港",
     "camera": "C35EFJ",
     "film": "Fujifilm C200",
     "image": "https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/HK2.jpeg"
-  }
+  },
   {
-    "name": "香港街頭",
+    "name": "香港巷弄",
     "price": 20,
     "category": "香港",
     "camera": "C35EFJ",
     "film": "Fujifilm C200",
     "image": "https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/HK3.jpeg"
-  }
+  },
   {
-    "name": "香港街頭",
+    "name": "香港日常",
     "price": 20,
     "category": "香港",
     "camera": "C35EFJ",
     "film": "Fujifilm C200",
     "image": "https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/HK4.jpeg"
-  }
+  },
   {
     "name": "大橋",
     "price": 20,
@@ -86,23 +78,23 @@
     "camera": "Fuji拍立得",
     "film": "Fujifilm",
     "image": "https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/JP1.jpeg"
-  }
+  },
   {
-    "name": "大橋",
+    "name": "大橋遠景",
     "price": 20,
     "category": "日本",
     "camera": "Fuji拍立得",
     "film": "Fujifilm",
-    "image": "https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/JP1.jpeg"
-  }
+    "image": "https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/JP2.jpeg"
+  },
   {
-    "name": "大橋",
+    "name": "大橋夜色",
     "price": 20,
     "category": "日本",
     "camera": "Fuji拍立得",
     "film": "Fujifilm",
-    "image": "https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/JP1.jpeg"
-  }
+    "image": "https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/JP3.jpeg"
+  },
   {
     "name": "市集",
     "price": 20,
@@ -110,32 +102,11 @@
     "camera": "Fuji拍立得",
     "film": "Fujifilm",
     "image": "https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/Thaimarket1.jpeg"
-  }
+  },
   {
-    "name": "市集",
+    "name": "市集一角",
     "price": 20,
     "category": "泰國",
     "camera": "Fuji拍立得",
     "film": "Fujifilm",
-    "image": "https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/Thaimarket2.jpeg"
-  }
-  {
-    "name": "市集",
-    "price": 20,
-    "category": "泰國",
-    "camera": "Fuji拍立得",
-    "film": "Fujifilm",
-    "image": "https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/Thaimarket3.jpeg"
-  }
-  {
-    "name": "市集",
-    "price": 20,
-    "category": "泰國",
-    "camera": "Fuji拍立得",
-    "film": "Fujifilm",
-    "image": "https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/Thaimarket4.jpeg"
-  }
-
-  
-  
-]
+    "image":
