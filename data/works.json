@@ -80,22 +80,6 @@
     "image": "https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/JP1.jpeg"
   },
   {
-    "name": "大橋遠景",
-    "price": 20,
-    "category": "日本",
-    "camera": "Fuji拍立得",
-    "film": "Fujifilm",
-    "image": "https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/JP2.jpeg"
-  },
-  {
-    "name": "大橋夜色",
-    "price": 20,
-    "category": "日本",
-    "camera": "Fuji拍立得",
-    "film": "Fujifilm",
-    "image": "https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/JP3.jpeg"
-  },
-  {
     "name": "市集",
     "price": 20,
     "category": "泰國",
@@ -109,4 +93,22 @@
     "category": "泰國",
     "camera": "Fuji拍立得",
     "film": "Fujifilm",
-    "image":
+    "image": "https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/Thaimarket2.jpeg"
+  }
+  {
+    "name": "市集一角",
+    "price": 20,
+    "category": "泰國",
+    "camera": "Fuji拍立得",
+    "film": "Fujifilm",
+    "image": "https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/Thaimarket3.jpeg"
+  }
+  {
+    "name": "市集一角",
+    "price": 20,
+    "category": "泰國",
+    "camera": "Fuji拍立得",
+    "film": "Fujifilm",
+    "image": "https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/Thaimarket4.jpeg"
+  }
+]
