@@ -79,6 +79,22 @@
     "film": "Fujifilm",
     "image": "https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/JP1.JPG"
   },
+    {
+    "name": "大橋",
+    "price": 20,
+    "category": "日本",
+    "camera": "Fuji拍立得",
+    "film": "Fujifilm",
+    "image": "https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/JP2.jpeg"
+  },
+    {
+    "name": "大橋",
+    "price": 20,
+    "category": "日本",
+    "camera": "Fuji拍立得",
+    "film": "Fujifilm",
+    "image": "https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/assets/img/JP3.jpeg"
+  },
   {
     "name": "市集",
     "price": 20,
