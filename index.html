@@ -22,7 +22,7 @@
   </head>
     
   <body>
-  <header>
+    <header>
   <h1>Angel's Photography</h1>
   <nav>
     <a href="#gallery">作品</a>
@@ -42,7 +42,10 @@
 
 <div class="info-row">
   <h4>我的作品</h4>
-  <button class="like-btn">❤️ 讚 <span id="like-count">0</span></button>
+  <div class="fav-count">
+  <i class="fa-regular fa-heart"></i>
+  已收藏 <span id="fav-count">0</span>
+</div>
 </div>
 
 <div id="about">
@@ -51,6 +54,7 @@
   <p>這裡展示的是我的攝影作品，也記錄著我在底片影像保存與沖洗路上的探索。</p>
 </div>
 <div id="filters"></div>
+
 <div id="sort-bar">
   <select id="price-sort">
     <option value="default">預設排序</option>
@@ -58,8 +62,21 @@
     <option value="desc">價格高到低</option>
   </select>
 </div>
-<div id="gallery"></div>
 
+<div id="gallery"></div>
+<div id="load-trigger"></div>
+
+<!-- Loading 狀態 -->
+<div id="gallery-loading" class="gallery-state">
+<i class="fa-solid fa-camera-retro camera-icon"></i>
+  <p>載入中...</p>
+</div>
+
+<!-- Error 狀態 -->
+<div id="gallery-error" class="gallery-state" style="display:none;">
+<i class="fa-solid fa-camera-retro camera-icon"></i>
+  <p>資料載入失敗，請檢查網路後重新整理</p>
+</div>
 <section id="comments">
   <h2>留言板</h2>
 
@@ -144,8 +161,26 @@
     <a href="" target="_blank">Instagram</a>
   </div>
   <p class="footer-copy">© 2026 Angel. All rights reserved.</p>
+ <!-- 作品詳細頁 Modal -->
+<div id="work-modal" class="modal-overlay">
+  <div class="modal-content">
+    <button class="modal-close" id="modal-close">✕</button>
+    <img id="modal-image" src="" alt="">
+    <div class="modal-info">
+      <h2 id="modal-name"></h2>
+      <p id="modal-description"></p>
+      <div class="modal-specs">
+        <p>價格：$<span id="modal-price"></span></p>
+        <p>分類：<span id="modal-category"></span></p>
+        <p>相機：<span id="modal-camera"></span></p>
+        <p>底片：<span id="modal-film"></span></p>
+      </div>
+    </div>
+  </div>
+</div>
 </footer>
-    <script  src="./script.js"></script>
+ 
+  
 
   </body>
   
