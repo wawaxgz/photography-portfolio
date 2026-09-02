@@ -1,12 +1,36 @@
 const WORKS_URL = 'https://raw.githubusercontent.com/wawaxgz/photography-portfolio/main/data/works.json';
-
 let works = [];
+const LOAD_STEP = window.innerWidth <= 768 ? 3 : 6;
+let visibleCount = LOAD_STEP;
+let currentList = [];        // 目前篩選/排序後的完整清單
+
+/* ---------- Day 24：更新收藏統計數字 ---------- */
+function updateFavCount() {
+  const count = works.filter(function (work) {
+    return work.isFavorite;
+  }).length;
+  document.querySelector('#fav-count').textContent = count;
+}
 
 async function init() {
+  const loadingEl = document.querySelector('#gallery-loading');
+  const errorEl   = document.querySelector('#gallery-error');
+  const galleryEl = document.querySelector('#gallery');
+
+  // 顯示 Loading，隱藏其他
+  loadingEl.style.display = 'block';
+  errorEl.style.display = 'none';
+  galleryEl.style.display = 'none';
+
   try {
     const response = await fetch(WORKS_URL);
-    const data = await response.json();
+    
+    // fetch 成功但回應狀態碼是錯誤（例如 404、500）
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
 
+    const data = await response.json();
     const savedFavorites = JSON.parse(localStorage.getItem('favorites')) || {};
 
     works = data.map(function (item) {
@@ -15,9 +39,16 @@ async function init() {
       });
     });
 
+    // 成功：隱藏 Loading，顯示作品
+    loadingEl.style.display = 'none';
+    galleryEl.style.display = 'flex';
+
     startApp();
 
   } catch (error) {
+    // 失敗：隱藏 Loading，顯示 Error
+    loadingEl.style.display = 'none';
+    errorEl.style.display = 'block';
     console.error('資料載入失敗', error);
   }
 }
@@ -26,31 +57,23 @@ function startApp() {
   renderWorks(works);
   buildFilters();
   buildSlider();
+  updateFavCount(); 
 }
- 
-/* ---------- Day 1：按讚功能 ---------- */
-const button = document.querySelector('.like-btn');
-const countSpan = document.querySelector('#like-count');
-let count = 0;
- 
-button.addEventListener('click', function () {
-  count = count + 1;
-  countSpan.textContent = count;
-});
- 
  
 /* ---------- Day 3 + Day 5：渲染函式 ---------- */
 const gallery = document.querySelector('#gallery');
 
 function renderWorks(list) {
-  gallery.innerHTML = '';
+  currentList = list;              // 記住完整清單
+  const visible = list.slice(0, visibleCount);   // 只取前 N 張
 
+  gallery.innerHTML = '';
   let html = '';
 
-  list.forEach(function (work, index) {
+  visible.forEach(function (work, index) {
     html = html + `
       <div class="card">
-        <img src="${work.image}" alt="${work.name}">
+        <img src="${work.image}" alt="${work.name}" loading="lazy">
         <button class="heart-btn ${work.isFavorite ? 'active' : ''}" data-index="${index}">♥</button>
         <h3>${work.name}</h3>
         <p>價格：$${work.price}</p>
@@ -62,6 +85,132 @@ function renderWorks(list) {
   });
 
   gallery.innerHTML = html;
+
+  // 全部載完就隱藏觸發點
+  const trigger = document.querySelector('#load-trigger');
+  trigger.style.display = visibleCount >= list.length ? 'none' : 'block';
+}
+
+/* ---------- 篩選按鈕 ---------- */
+function buildFilters() {
+  const categories = ['全部', ...new Set(works.map(function (work) {
+    return work.category;
+  }))];
+
+  const filtersDiv = document.querySelector('#filters');
+  filtersDiv.innerHTML = '';
+
+  categories.forEach(function (category) {
+    const btn = document.createElement('button');
+    btn.textContent = category;
+    btn.className = 'filter-btn';
+
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.filter-btn').forEach(function (b) {
+        b.classList.remove('active');
+      });
+      btn.classList.add('active');
+
+      if (category === '全部') {
+        renderWorks(works);
+      } else {
+        const filtered = works.filter(function (work) {
+          return work.category === category;
+        });
+        renderWorks(filtered);
+      }
+    });
+
+    filtersDiv.appendChild(btn);
+  });
+
+  document.querySelector('.filter-btn').classList.add('active');
+}
+
+/* ---------- Day 29：無限捲動 ---------- */
+const loadTrigger = document.querySelector('#load-trigger');
+
+const observer = new IntersectionObserver(function (entries) {
+  entries.forEach(function (entry) {
+    // entry.isIntersecting 代表這個元素進入畫面了
+    if (entry.isIntersecting && visibleCount < currentList.length) {
+      visibleCount = visibleCount + LOAD_STEP;
+      renderWorks(currentList);
+    }
+  });
+});
+
+observer.observe(loadTrigger);
+
+function applyFiltersAndSort() {
+  let result = currentCategory === '全部'
+    ? [...works]
+    : works.filter(function (work) {
+        return work.category === currentCategory;
+      });
+
+  if (currentPriceSort === 'asc') {
+    result.sort(function (a, b) { return a.price - b.price; });
+  } else if (currentPriceSort === 'desc') {
+    result.sort(function (a, b) { return b.price - a.price; });
+  }
+
+  visibleCount = LOAD_STEP;    // ← 加這行，切換篩選時重新從 6 張開始
+  renderWorks(result);
+}
+
+function applyFiltersAndSort() {
+  let result = currentCategory === '全部'
+    ? [...works]
+    : works.filter(function (work) {
+        return work.category === currentCategory;
+      });
+
+  if (currentPriceSort === 'asc') {
+    result.sort(function (a, b) { return a.price - b.price; });
+  } else if (currentPriceSort === 'desc') {
+    result.sort(function (a, b) { return b.price - a.price; });
+  }
+
+  visibleCount = LOAD_STEP;    // ← 加這行，切換篩選時重新從 6 張開始
+  renderWorks(result);
+}
+
+/* ---------- 輪播 ---------- */
+function buildSlider() {
+  const strip = document.querySelector('#strip');
+  strip.innerHTML = '';
+
+  works.forEach(function (work) {
+    const img = document.createElement('img');
+    img.src = work.image;
+    img.alt = work.name;
+    strip.appendChild(img);
+  });
+
+  let current = 0;
+
+  function updateSlide() {
+    strip.style.transform = `translateX(${current * -100}%)`;
+  }
+
+  document.querySelector('#next').addEventListener('click', function () {
+    if (current === works.length - 1) {
+      current = 0;
+    } else {
+      current = current + 1;
+    }
+    updateSlide();
+  });
+
+  document.querySelector('#prev').addEventListener('click', function () {
+    if (current === 0) {
+      current = works.length - 1;
+    } else {
+      current = current - 1;
+    }
+    updateSlide();
+  });
 }
 
 /* ----------  價格篩選 + 排序 ---------- */
@@ -117,43 +266,6 @@ function buildFilters() {
   });
 }
 
-/* ---------- 輪播 ---------- */
-function buildSlider() {
-  const strip = document.querySelector('#strip');
-  strip.innerHTML = '';
-
-  works.forEach(function (work) {
-    const img = document.createElement('img');
-    img.src = work.image;
-    img.alt = work.name;
-    strip.appendChild(img);
-  });
-
-  let current = 0;
-
-  function updateSlide() {
-    strip.style.transform = `translateX(${current * -100}%)`;
-  }
-
-  document.querySelector('#next').addEventListener('click', function () {
-    if (current === works.length - 1) {
-      current = 0;
-    } else {
-      current = current + 1;
-    }
-    updateSlide();
-  });
-
-  document.querySelector('#prev').addEventListener('click', function () {
-    if (current === 0) {
-      current = works.length - 1;
-    } else {
-      current = current - 1;
-    }
-    updateSlide();
-  });
-}
-
 /* ---------- 回到頂部按鈕 ---------- */
 const topBtn = document.querySelector('#back-btn');
 
@@ -188,6 +300,8 @@ document.querySelector('#gallery').addEventListener('click', function (event) {
     const savedFavorites = JSON.parse(localStorage.getItem('favorites')) || {};
     savedFavorites[works[index].name] = works[index].isFavorite;
     localStorage.setItem('favorites', JSON.stringify(savedFavorites));
+    
+    updateFavCount(); 
   }
 });
 
@@ -397,3 +511,53 @@ document.querySelectorAll('.sort-btn').forEach(function (btn) {
 });
 
 init();
+
+// 假文字：先給每張作品一段介紹
+const workDescriptions = [
+  '拍這張的那天，我漫步在濟州島的老街上，被一家傳統烤肉店的招牌吸引住了。可愛的黑豬圖案配上手寫韓文，充滿了濟州島特有的溫度。',
+  '為了拍這張日出，我起了個大早搭第一班公車上山。晨光灑在火山口的瞬間，整片綠地都亮了起來，這是我第一次覺得等待是值得的。',
+  '這條街是我散步時偶然發現的，遠處撐著白傘的女子讓我想起電影裡的畫面，忍不住按下快門。底片獨有的顆粒感讓整個場景更有故事性。'
+];
+
+const modal = document.querySelector('#work-modal');
+const modalClose = document.querySelector('#modal-close');
+
+// 事件委派：點卡片時打開 Modal
+document.querySelector('#gallery').addEventListener('click', function (event) {
+  // 如果點的是愛心按鈕，不打開 Modal
+  if (event.target.classList.contains('heart-btn')) return;
+
+  // 找到被點的卡片
+  const card = event.target.closest('.card');
+  if (!card) return;
+
+  // 從卡片的 data-index 找到對應資料
+  const heartBtn = card.querySelector('.heart-btn');
+  const index = Number(heartBtn.dataset.index);
+  const work = works[index];
+
+  // 把資料填進 Modal
+  document.querySelector('#modal-image').src = work.image;
+  document.querySelector('#modal-image').alt = work.name;
+  document.querySelector('#modal-name').textContent = work.name;
+  document.querySelector('#modal-description').textContent = workDescriptions[index] || '';
+  document.querySelector('#modal-price').textContent = work.price;
+  document.querySelector('#modal-category').textContent = work.category;
+  document.querySelector('#modal-camera').textContent = work.camera;
+  document.querySelector('#modal-film').textContent = work.film;
+
+  // 顯示 Modal
+  modal.classList.add('show');
+});
+
+// 點 X 關閉
+modalClose.addEventListener('click', function () {
+  modal.classList.remove('show');
+});
+
+// 點背景暗處也關閉
+modal.addEventListener('click', function (event) {
+  if (event.target === modal) {
+    modal.classList.remove('show');
+  }
+});
