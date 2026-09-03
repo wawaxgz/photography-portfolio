@@ -152,20 +152,44 @@ function buildSlider() {
   });
 
   let current = 0;
+  let autoTimer = null;
 
   function updateSlide() {
     strip.style.transform = `translateX(${current * -100}%)`;
   }
 
-  document.querySelector('#next').addEventListener('click', function () {
+  function nextSlide() {
     current = current === works.length - 1 ? 0 : current + 1;
     updateSlide();
+  }
+
+  function prevSlide() {
+    current = current === 0 ? works.length - 1 : current - 1;
+    updateSlide();
+  }
+
+  // 開始自動播放
+  function startAuto() {
+    autoTimer = setInterval(nextSlide, 4000);
+  }
+
+  // 停止自動播放
+  function stopAuto() {
+    clearInterval(autoTimer);
+    autoTimer = null;
+  }
+
+  document.querySelector('#next').addEventListener('click', function () {
+    stopAuto();      // 使用者接管，停止自動
+    nextSlide();
   });
 
   document.querySelector('#prev').addEventListener('click', function () {
-    current = current === 0 ? works.length - 1 : current - 1;
-    updateSlide();
+    stopAuto();      // 使用者接管，停止自動
+    prevSlide();
   });
+
+  startAuto();       // 頁面載入就開始自動播放
 }
 
 /* ========== 收藏 ========== */
